@@ -1,10 +1,10 @@
-package com.reto3.repository;
+package com.reto5.repository;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.reto3.intrface.MachineInterface;
-import com.reto3.model.Machine;
+import com.reto5.intrface.MachineInterface;
+import com.reto5.model.Machine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

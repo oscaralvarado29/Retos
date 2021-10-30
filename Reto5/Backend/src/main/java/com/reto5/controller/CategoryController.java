@@ -1,10 +1,10 @@
-package com.reto3.controller;
+package com.reto5.controller;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.reto3.model.Category;
-import com.reto3.service.CategoryService;
+import com.reto5.model.Category;
+import com.reto5.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;

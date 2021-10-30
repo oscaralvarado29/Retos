@@ -1,9 +1,15 @@
-package com.reto3.service;
+package com.reto5.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import com.reto3.model.Reservation;
-import com.reto3.repository.ReservationRepository;
+import com.reto5.model.Reservation;
+import com.reto5.report.ClientCount;
+import com.reto5.report.ReservationStatus;
+import com.reto5.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,5 +97,34 @@ public class ReservationService {
             return true;
         }).orElse(false);
         return aBoolean;
+    }
+
+    public ReservationStatus getReservationsStatusReport(){
+        List<Reservation>completed=reservationRepository.getReservationByStatus("completed");
+        List<Reservation>cancelled=reservationRepository.getReservationByStatus("cancelled");
+        return new ReservationStatus(completed.size(), cancelled.size());
+    }
+
+    public List<Reservation> getReservationPeriod(String dateA, String dateB){
+        SimpleDateFormat parser=new SimpleDateFormat("yyyy-MM-dd");
+        Date aDate= new Date();
+        Date bDate= new Date();
+
+        try {
+            aDate = parser.parse(dateA);
+            bDate = parser.parse(dateB);
+        }catch(ParseException evt){
+            evt.printStackTrace();
+        }
+        if(aDate.before(bDate)){
+            return reservationRepository.getReservationPeriod(aDate, bDate);
+        }else{
+            return new ArrayList<>();
+        }
+
+    }
+
+    public List<ClientCount> getTopClients(){
+        return reservationRepository.getTopClients();
     }
 }

@@ -1,6 +1,6 @@
-package com.reto3.intrface;
+package com.reto5.intrface;
 
-import com.reto3.model.Client;
+import com.reto5.model.Client;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ClientInterface extends CrudRepository<Client,Integer> {

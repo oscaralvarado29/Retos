@@ -1,9 +1,9 @@
-package com.reto3.repository;
+package com.reto5.repository;
 
 import java.util.List;
 import java.util.Optional;
-import com.reto3.intrface.MessageInterface;
-import com.reto3.model.Message;
+import com.reto5.intrface.MessageInterface;
+import com.reto5.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

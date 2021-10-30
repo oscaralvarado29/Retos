@@ -1,6 +1,6 @@
-package com.reto3.intrface;
+package com.reto5.intrface;
 
-import com.reto3.model.Message;
+import com.reto5.model.Message;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MessageInterface extends CrudRepository<Message,Integer>  {
