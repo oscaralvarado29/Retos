@@ -23,7 +23,7 @@ public class ReservationRepository {
 
     /**
      * Select
-     * @return
+     * @return List<Reservation>
      */
     public List<Reservation> getAll(){
         return (List<Reservation>) reservationInterface.findAll();
@@ -31,8 +31,8 @@ public class ReservationRepository {
 
     /**
      * Select by id
-     * @param id
-     * @return
+     * @param id id
+     * @return Optional<Reservation>
      */
     public Optional<Reservation> getReservation(int id){
         return reservationInterface.findById(id);
@@ -40,8 +40,8 @@ public class ReservationRepository {
 
     /**
      * Insert
-     * @param reservation
-     * @return
+     * @param reservation reservation
+     * @return Reservation
      */
     public Reservation save(Reservation reservation){
         return reservationInterface.save(reservation);
@@ -49,7 +49,7 @@ public class ReservationRepository {
 
     /**
      * Delete
-     * @param reservation
+     * @param reservation reservation
      */
     public void delete(Reservation reservation){
         reservationInterface.delete(reservation);
@@ -66,8 +66,8 @@ public class ReservationRepository {
     public List<ClientCount> getTopClients(){
         List<ClientCount> res= new ArrayList<>();
         List<Object[]> report = reservationInterface.countTotalReservationByClient();
-        for(int i=0;i<report.size();i++){
-            res.add(new ClientCount((Long)report.get(i)[1],(Client) report.get(i)[0]));
+        for (Object[] objects : report) {
+            res.add(new ClientCount((Long) objects[1], (Client) objects[0]));
         }
         return res;
     }

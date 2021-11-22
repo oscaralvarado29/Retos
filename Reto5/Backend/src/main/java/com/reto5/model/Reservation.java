@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
  *
  * @author Oscar Alvarado
  */
-@Data                                           // Le dice a LOMBO que cree los getter y setters.
-@AllArgsConstructor                             // Le dice a LOMBO que cree un constructor con todos los argumentos
+@Data                                           // Le dice a LOMBOK que cree los getter y setters.
+@AllArgsConstructor                             // Le dice a LOMBOK que cree un constructor con todos los argumentos
 @NoArgsConstructor
 @Entity
 @Table(name = "reservation")

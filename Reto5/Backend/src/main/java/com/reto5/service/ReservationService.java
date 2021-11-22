@@ -20,37 +20,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationService {
     @Autowired
-    private ReservationRepository reservationRepository;
+    private ReservationRepository resRepository;
 
     /**
      * GET
-     * @return
+     * @return List<Reservation>
      */
     public List<Reservation> getAll(){
-        return reservationRepository.getAll();
+        return resRepository.getAll();
     }
 
     /**
      * GET select a specific id
-     * @param reservationId
-     * @return
+     * @param reservationId reservationId
+     * @return Optional<Reservation>
      */
     public Optional<Reservation> getReservation(int reservationId) {
-        return reservationRepository.getReservation(reservationId);
+        return resRepository.getReservation(reservationId);
     }
 
     /**
      * POST
-     * @param reservation
-     * @return
+     * @param reservation reservation
+     * @return Reservation
      */
     public Reservation save(Reservation reservation){
         if(reservation.getIdReservation()==null){
-            return reservationRepository.save(reservation);
+            return resRepository.save(reservation);
         }else{
-            Optional<Reservation> e= reservationRepository.getReservation(reservation.getIdReservation());
-            if(e.isEmpty()){
-                return reservationRepository.save(reservation);
+            Optional<Reservation> evt= resRepository.getReservation(reservation.getIdReservation());
+            if(evt.isEmpty()){
+                return resRepository.save(reservation);
             }else{
                 return reservation;
             }
@@ -59,25 +59,25 @@ public class ReservationService {
 
     /**
      * UPDATE
-     * @param reservation
-     * @return
+     * @param reservation reservation
+     * @return Reservation
      */
     public Reservation update(Reservation reservation){
         if(reservation.getIdReservation()!=null){
-            Optional<Reservation> e= reservationRepository.getReservation(reservation.getIdReservation());
-            if(!e.isEmpty()){
+            Optional<Reservation> evt= resRepository.getReservation(reservation.getIdReservation());
+            if(evt.isPresent()){
 
                 if(reservation.getStartDate()!=null){
-                    e.get().setStartDate(reservation.getStartDate());
+                    evt.get().setStartDate(reservation.getStartDate());
                 }
                 if(reservation.getDevolutionDate()!=null){
-                    e.get().setDevolutionDate(reservation.getDevolutionDate());
+                    evt.get().setDevolutionDate(reservation.getDevolutionDate());
                 }
                 if(reservation.getStatus()!=null){
-                    e.get().setStatus(reservation.getStatus());
+                    evt.get().setStatus(reservation.getStatus());
                 }
-                reservationRepository.save(e.get());
-                return e.get();
+                resRepository.save(evt.get());
+                return evt.get();
             }else{
                 return reservation;
             }
@@ -88,23 +88,32 @@ public class ReservationService {
 
     /**
      * DELETE
-     * @param reservationId
-     * @return
+     * @param reservationId reservationId
+     * @return boolean
      */
     public boolean deleteReservation(Integer reservationId) {
-        Boolean aBoolean = getReservation(reservationId).map(reservation -> {
-            reservationRepository.delete(reservation);
+        return getReservation(reservationId).map(reservation -> {
+            resRepository.delete(reservation);
             return true;
         }).orElse(false);
-        return aBoolean;
     }
 
+    /**
+     * GET select reservation for status
+     * @return ReservationStatus
+     */
     public ReservationStatus getReservationsStatusReport(){
-        List<Reservation>completed=reservationRepository.getReservationByStatus("completed");
-        List<Reservation>cancelled=reservationRepository.getReservationByStatus("cancelled");
+        List<Reservation>completed= resRepository.getReservationByStatus("completed");
+        List<Reservation>cancelled= resRepository.getReservationByStatus("cancelled");
         return new ReservationStatus(completed.size(), cancelled.size());
     }
 
+    /**
+     * GET select reservations for a specific period of time
+     * @param dateA dateA
+     * @param dateB dateB
+     * @return List<Reservation>
+     */
     public List<Reservation> getReservationPeriod(String dateA, String dateB){
         SimpleDateFormat parser=new SimpleDateFormat("yyyy-MM-dd");
         Date aDate= new Date();
@@ -117,14 +126,18 @@ public class ReservationService {
             evt.printStackTrace();
         }
         if(aDate.before(bDate)){
-            return reservationRepository.getReservationPeriod(aDate, bDate);
+            return resRepository.getReservationPeriod(aDate, bDate);
         }else{
             return new ArrayList<>();
         }
 
     }
 
+    /**
+     * GET select clients by classification
+     * @return List<ClientCount>
+     */
     public List<ClientCount> getTopClients(){
-        return reservationRepository.getTopClients();
+        return resRepository.getTopClients();
     }
 }
