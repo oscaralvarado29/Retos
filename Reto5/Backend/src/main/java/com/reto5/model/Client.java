@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor                             // Le dice a LOMBO que cree un constructor con todos los argumentos
 @NoArgsConstructor
 @Entity
-@Table(name = "client")
+@Table(name = "")
 public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +29,13 @@ public class Client implements Serializable {
     private String name;
     @Column(length=2)
     private Integer age;
+    @Column(length=2)
+    private Integer nee;
 
     @Column(nullable=true)
     @OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
     @JsonIgnoreProperties("client")
     private List<Message>messages;
-
     @Column(nullable=true)
     @OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
     @JsonIgnoreProperties("client")
